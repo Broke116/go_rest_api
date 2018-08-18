@@ -20,7 +20,9 @@ func main() {
 
 	s.HandleFunc("/members", mc.GetMembers).Methods("GET")
 	s.HandleFunc("/member/{id}", mc.GetMember).Methods("GET")
+	s.HandleFunc("/insertMember", mc.InsertMember).Methods("POST")
 	s.HandleFunc("/updateMember", mc.UpdateMember).Methods("POST")
+	s.HandleFunc("/deleteMember/{id}", mc.DeleteMember).Methods("DELETE")
 
 	http.Handle("/", r)
 	log.Fatal(http.ListenAndServe(address, nil))
