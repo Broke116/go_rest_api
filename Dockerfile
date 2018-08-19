@@ -12,7 +12,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o /app .
 # final stage
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
-RUN chmod +x ./app
 COPY --from=builder /app ./
+RUN chmod +x ./app
 ENTRYPOINT ["./app"] 
 EXPOSE 3030
