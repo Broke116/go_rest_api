@@ -2,9 +2,11 @@
 
 pipeline {
     environment {
+        DOCKER_HUB_USER = 'ekinyucel'
+        DOCKER_CREDENTIAL_ID = 'docker_hub'
         registry = "ekinyucel/go_rest_api"
         registryCredential = 'docker_hub'
-        dockerImage = ''*
+        dockerImage = ''
     }
 
     agent { dockerfile true }
