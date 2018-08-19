@@ -38,8 +38,8 @@ pipeline {
                     docker.withRegistry('', registryCredential)
                     dockerImage.push()
                 }
-            }
-            echo 'Successfully pushed to docker registry you may now see the image on docker hub'
+                echo 'Successfully pushed to docker registry you may now see the image on docker hub'
+            }            
         }
     }
 }
