@@ -8,9 +8,9 @@ pipeline {
 
     //agent { dockerfile true }
 
-    /*agent {
+    agent {
         label "docker"
-    }*/
+    }
 
     stages {
         stage('Unit') {
