@@ -16,11 +16,5 @@ pipeline {
                 sh 'docker build -t rest_api .'
             }
         }
-        stage('Run') {
-            agent any
-            steps {
-                sh 'docker run -p 8070:3030 -t rest_api'
-            }
-        }
     }
 }
