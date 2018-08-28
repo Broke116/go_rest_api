@@ -16,5 +16,12 @@ pipeline {
                 sh 'docker build -t rest_api .'
             }
         }
+        stage('Docker Push'){
+            agent any
+            steps {
+                sh "docker run -d --rm -p 8070:3030 -t rest_api"
+                echo "Application started on port: 8070"
+            }
+        }
     }
 }
