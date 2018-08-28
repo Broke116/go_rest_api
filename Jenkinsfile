@@ -7,10 +7,10 @@ pipeline {
     }
 
     agent none
-    //agent { dockerfile true }
 
     stages {
-        stage('Unit') {
+        stage('Build') {
+            agent any
             steps {
                 git "https://github.com/Broke116/go_rest_api.git"
                 sh 'docker build -t rest_api'
