@@ -19,8 +19,8 @@ pipeline {
         stage('Docker Push'){
             agent any
             steps {
-                sh "docker run -d --rm -p 8070:3030 -t rest_api"
-                echo "Application started on port: 8070"
+                sh "docker run -d --rm -p 4000:3030 -t rest_api"
+                echo "Application started on port: 4000"
             }
         }
     }
