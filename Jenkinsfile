@@ -6,11 +6,8 @@ pipeline {
         DOCKER_CREDENTIAL_ID = 'docker_hub'
     }
 
+    agent none
     //agent { dockerfile true }
-
-    agent {
-        label "docker"
-    }
 
     stages {
         stage('Unit') {
