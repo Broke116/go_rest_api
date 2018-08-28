@@ -13,7 +13,7 @@ pipeline {
             agent any
             steps {
                 git "https://github.com/Broke116/go_rest_api.git"
-                sh 'docker build -t rest_api'
+                sh 'docker build -t rest_api .'
             }
         }
     }
