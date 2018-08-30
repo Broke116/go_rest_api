@@ -11,10 +11,12 @@ pipeline {
     stages {
         stage('Stop running container') {
             agent any
-            sh 'docker stop $(docker ps -a -q --filter ancestor=rest_api)'
-            echo "Container stopped"
-            sh 'docker container prune'
-            echo "Stopped containers pruned"
+            steps {
+                sh 'docker stop $(docker ps -a -q --filter ancestor=rest_api)'
+                echo "Container stopped"
+                sh 'docker container prune'
+                echo "Stopped containers pruned"
+            }
         }
         stage('Build') {
             agent any
