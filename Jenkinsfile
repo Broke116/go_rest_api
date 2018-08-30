@@ -10,7 +10,6 @@ pipeline {
 
     stages {
         stage('Pre process') {
-            agent any
             parallel {
                 stage('Container Stop') {
                     agent any
