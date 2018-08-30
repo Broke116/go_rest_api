@@ -16,7 +16,7 @@ pipeline {
                 sh 'docker build -t rest_api .'
             }
         }
-        stage('Docker Push'){
+        stage('Docker Run'){
             agent any
             steps {
                 sh "docker run -d --rm -p 4000:3030 -t rest_api"

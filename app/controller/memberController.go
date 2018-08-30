@@ -34,6 +34,12 @@ type MemberController struct {
 	Controller
 }
 
+// GetStatus returns the status of the service
+func (m *MemberController) GetStatus(w http.ResponseWriter, r *http.Request) {
+	utils.Log(r.Method, r.URL)
+	m.SendJSON(w, r, "{status:'ok'}", http.StatusOK)
+}
+
 // GetMembers method is used to return all members
 func (m *MemberController) GetMembers(w http.ResponseWriter, r *http.Request) {
 	utils.Log(r.Method, r.URL)
