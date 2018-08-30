@@ -9,6 +9,11 @@ pipeline {
     agent none
 
     stages {
+        stage('Stop running container') {
+            agent any
+            sh "docker rm $(docker ps -a -q --filter ancestor=rest_api)"
+            echo "Running application forced to stopped and pruned"
+        }
         stage('Build') {
             agent any
             steps {
