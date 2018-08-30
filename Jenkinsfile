@@ -32,5 +32,12 @@ pipeline {
                 echo "Application started on port: 4000"
             }
         }
+        stage('Clean up') {
+            agent any
+            steps {
+                sh 'docker rmi -f $(docker images -f "dangling=true" -q)'
+                echo "Dangling images removed"
+            }
+        }
     }
 }
