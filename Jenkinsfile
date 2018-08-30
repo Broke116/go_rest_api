@@ -24,7 +24,7 @@ pipeline {
                 stage('Remove Image') {
                     agent any
                     steps {
-                        sh "docker rmi -f $(docker images | grep 'rest_api')"
+                        sh "docker rmi $(docker images | grep 'rest_api')"
                         echo "Image is removed"
                     }
                 }
