@@ -4,14 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-
-	"github.com/fatih/color"
 )
 
 // Log is a common function which used return the request parameters
 func Log(method string, url *url.URL) {
-	green := color.New(color.FgGreen).SprintfFunc()
-	fmt.Printf("%s ", green(method))
+	fmt.Printf("%s ", method)
 	fmt.Print(url)
 	fmt.Println()
 }
