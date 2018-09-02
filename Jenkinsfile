@@ -9,6 +9,17 @@ pipeline {
     agent none
 
     stages {
+        stage('Pre process') {
+            agent any
+            steps {
+                sh 'docker stop $(docker ps -a -q --filter ancestor=rest_api)'
+                echo "Container is stopped"
+                sh 'docker container prune'
+                echo "Stopped containers are pruned"
+                sh 'docker rmi -f $(docker images --format "{{.Repository}}:{{.Tag}}" | grep "rest_api")'
+                echo "Image is removed"
+            }
+        }
         stage('Build') {
             agent any
             steps {
