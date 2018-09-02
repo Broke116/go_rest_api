@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	address = ":8080"
+	address = ":3030"
 )
 
 func main() {
