@@ -9,32 +9,21 @@ pipeline {
     agent none
 
     stages {
-        stage('Pre process') {
-            agent any
-            steps {
-                sh 'docker stop $(docker ps -a -q --filter ancestor=rest_api)'
-                echo "Container is stopped"
-                sh 'docker container prune'
-                echo "Stopped containers are pruned"
-                sh 'docker rmi -f $(docker images --format "{{.Repository}}:{{.Tag}}" | grep "rest_api")'
-                echo "Image is removed"
-            }
-        }
         stage('Build and Run') {
             agent any
             steps {
                 git "https://github.com/Broke116/go_rest_api.git"
-                //sh 'docker build -t rest_api .'
-                sh 'docker-compose up -d'
+                sh 'docker build -t rest_api .'
+                //sh 'docker-compose up -d'
             }
         }
-        /*stage('Docker Run'){
+        stage('Docker Run'){
             agent any
             steps {
                 sh 'docker run -d --rm -p 4000:3030 -t rest_api'
                 echo "Application started on port: 4000"
             }
-        }*/
+        }
         stage('Clean up') {
             agent any
             steps {
