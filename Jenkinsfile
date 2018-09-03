@@ -20,20 +20,21 @@ pipeline {
                 echo "Image is removed"
             }
         }
-        stage('Build') {
+        stage('Build and Run') {
             agent any
             steps {
                 git "https://github.com/Broke116/go_rest_api.git"
-                sh 'docker build -t rest_api .'
+                //sh 'docker build -t rest_api .'
+                sh 'docker-compose up -d'
             }
         }
-        stage('Docker Run'){
+        /*stage('Docker Run'){
             agent any
             steps {
                 sh 'docker run -d --rm -p 4000:3030 -t rest_api'
                 echo "Application started on port: 4000"
             }
-        }
+        }*/
         stage('Clean up') {
             agent any
             steps {
