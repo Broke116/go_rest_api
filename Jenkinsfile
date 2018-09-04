@@ -13,7 +13,7 @@ pipeline {
             agent any
             steps {
                 script {
-                    if ("$(docker ps -q -f name=rest_api)" ) {
+                    if ("(docker ps -q -f name=rest_api)" ) {
                         echo "Container exists and running"
                     }
                 }
