@@ -12,9 +12,11 @@ pipeline {
         stage('Pre process') {
             agent any
             steps {
-                if [ ! "$(docker ps -q -f name=rest_api)" ]; then
-                    echo "Container exists and running"
-                fi
+                script {
+                    if ("$(docker ps -q -f name=rest_api)" ) {
+                        echo "Container exists and running"
+                    }
+                }
                 sh 'docker stop $(docker ps -a -q --filter ancestor=rest_api)'
                 echo "Container is stopped"
                 sh 'docker container prune'
