@@ -21,7 +21,7 @@ pipeline {
                     } else {
                         echo "Do not have a running container right now."
                     }
-                    container_id = $(docker ps | grep go_api | grep -o "^[0-9a-z]*")
+                    container_id = sh '$(docker ps | grep go_api | grep -o "^[0-9a-z]*")'
                     echo $container_id
                 }                
                 sh 'docker container prune'
