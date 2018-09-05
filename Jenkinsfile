@@ -41,18 +41,20 @@ pipeline {
                 sh 'docker-compose up -d'
             }
         }
-        parallel {
-            stage('Test'){
-                agent any
-                steps {
-                    sh 'docker ps -q -f name=go_api'
+        stage('Test & Clean-up') {
+            parallel {
+                stage('Test'){
+                    agent any
+                    steps {
+                        sh 'docker ps -q -f name=go_api'
+                    }
                 }
-            }
-            stage('Clean up') {
-                agent any
-                steps {
-                    sh 'docker rmi -f $(docker images -f "dangling=true" -q)'
-                    echo "Dangling images removed"
+                stage('Clean up') {
+                    agent any
+                    steps {
+                        sh 'docker rmi -f $(docker images -f "dangling=true" -q)'
+                        echo "Dangling images removed"
+                    }
                 }
             }
         }
