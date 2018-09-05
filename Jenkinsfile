@@ -29,9 +29,8 @@ pipeline {
         stage('Build and Run') {
             agent any
             steps {
-                git "https://github.com/Broke116/go_rest_api.git"
+                git url: "https://github.com/Broke116/go_rest_api.git", branch: "api_compose"
                 //sh 'docker build -t rest_api .'
-                sh 'pwd'
                 sh 'docker-compose up -d'
             }
         }
