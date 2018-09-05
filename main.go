@@ -1,7 +1,6 @@
 package main
 
 import (
-	"go_rest_api/app/config/db/mongo"
 	"go_rest_api/app/controller"
 	"log"
 	"net/http"
@@ -14,13 +13,13 @@ const (
 )
 
 func main() {
-	ms, err := mongo.NewSession("mongodb://db:27017") // do not hard code the server address
+	/*ms, err := mongo.NewSession("mongodb://db:27017") // do not hard code the server address
 
 	if err != nil {
 		log.Fatalln("unable to connect to mongodb")
 	}
 
-	defer ms.Close()
+	defer ms.Close()*/
 
 	mc := &controller.MemberController{}
 
