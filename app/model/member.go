@@ -14,7 +14,7 @@ type Member struct {
 	Age         int       `json:"age"`
 	Gender      string    `json:"gender"`
 	Status      string    `json:"status"`
-	StartDate   time.Time `json:"status"`
+	StartDate   time.Time `json:"start_date"`
 }
 
 // Members holds multiple member values
