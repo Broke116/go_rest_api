@@ -17,16 +17,16 @@ var resultMessage string
 var httpStatusCode int
 
 var members = []model.Member{
-	model.Member{ID: "1", Name: "Ekin", Surname: "Yucel", Nationality: "TUR", Age: 23, Gender: "M"},
-	model.Member{ID: "2", Name: "Susan", Surname: "Doe", Nationality: "TUR", Age: 24, Gender: "F"},
-	model.Member{ID: "3", Name: "Alberto", Surname: "Yucel", Nationality: "BRA", Age: 30, Gender: "M"},
-	model.Member{ID: "4", Name: "Jane", Surname: "Doe", Nationality: "TUR", Age: 26, Gender: "F"},
-	model.Member{ID: "5", Name: "John", Surname: "Doe", Nationality: "ENG", Age: 28, Gender: "M"},
-	model.Member{ID: "6", Name: "Test", Surname: "Test", Nationality: "JPN", Age: 23, Gender: "F"},
-	model.Member{ID: "7", Name: "Mirel", Surname: "Souza", Nationality: "TUR", Age: 25, Gender: "F"},
-	model.Member{ID: "8", Name: "Donald", Surname: "Duck", Nationality: "ITA", Age: 50, Gender: "F"},
-	model.Member{ID: "9", Name: "Tekin", Surname: "Acar", Nationality: "TUR", Age: 18, Gender: "M"},
-	model.Member{ID: "10", Name: "Roberto", Surname: "Soldado", Nationality: "SPA", Age: 24, Gender: "F"},
+	model.Member{ID: "1", Name: "Ekin", Surname: "Yucel", Nationality: "TUR", Age: 23, Gender: "M", Status: "AC"},
+	model.Member{ID: "2", Name: "Susan", Surname: "Doe", Nationality: "TUR", Age: 24, Gender: "F", Status: "AC"},
+	model.Member{ID: "3", Name: "Alberto", Surname: "Yucel", Nationality: "BRA", Age: 30, Gender: "M", Status: "AC"},
+	model.Member{ID: "4", Name: "Jane", Surname: "Doe", Nationality: "TUR", Age: 26, Gender: "F", Status: "AC"},
+	model.Member{ID: "5", Name: "John", Surname: "Doe", Nationality: "ENG", Age: 28, Gender: "M", Status: "AC"},
+	model.Member{ID: "6", Name: "Test", Surname: "Test", Nationality: "JPN", Age: 23, Gender: "F", Status: "AC"},
+	model.Member{ID: "7", Name: "Mirel", Surname: "Souza", Nationality: "TUR", Age: 25, Gender: "F", Status: "AC"},
+	model.Member{ID: "8", Name: "Donald", Surname: "Duck", Nationality: "ITA", Age: 50, Gender: "F", Status: "AC"},
+	model.Member{ID: "9", Name: "Tekin", Surname: "Acar", Nationality: "TUR", Age: 18, Gender: "M", Status: "AC"},
+	model.Member{ID: "10", Name: "Roberto", Surname: "Soldado", Nationality: "SPA", Age: 24, Gender: "F", Status: "AC"},
 }
 
 // MemberController is a definition for member controller

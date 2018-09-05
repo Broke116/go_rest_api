@@ -8,6 +8,7 @@ type Member struct {
 	Nationality string `json:"nationality"`
 	Age         int    `json:"age"`
 	Gender      string `json:"gender"`
+	Status      string `json:"status"`
 }
 
 // Members holds multiple member values
