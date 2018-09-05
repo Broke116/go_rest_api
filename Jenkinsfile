@@ -13,12 +13,10 @@ pipeline {
             agent any
             steps {
                 script {
-                    if ("(docker ps -q -f name=rest_api)" ) {
+                    if [["docker ps -q -f name=rest_api" ]] then
                         sh 'docker stop $(docker ps -a -q --filter ancestor=rest_api)'
                         echo "Running container is stopped"
-                    } else {
-                        echo "Do not have a running container right now."
-                    }
+                    fi
                 }                
                 sh 'docker container prune'
                 echo "Stopped/unused containers are pruned"
