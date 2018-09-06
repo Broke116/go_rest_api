@@ -1,11 +1,10 @@
-package model
+package dao
 
 import (
 	"go_rest_api/app/model"
 	"time"
 
 	mgo "gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
 )
 
 // MemberModel is the database representation of User object
@@ -41,11 +40,12 @@ func NewMemberModel(m *model.Member) *MemberModel {
 		ID:          m.ID,
 		Name:        m.Name,
 		Surname:     m.Surname,
+		Email:       m.Email,
 		Nationality: m.Nationality,
 		Age:         m.Age,
 		Gender:      m.Gender,
 		Status:      m.Status,
-		StartDate:   bson.Now()}
+		StartDate:   time.Now()}
 }
 
 // ToMember is a method which is used for getting data from the database and pushing it to the api used to show data to the client.
@@ -54,9 +54,10 @@ func (m *MemberModel) ToMember() *model.Member {
 		ID:          m.ID,
 		Name:        m.Name,
 		Surname:     m.Surname,
+		Email:       m.Email,
 		Nationality: m.Nationality,
 		Age:         m.Age,
 		Gender:      m.Gender,
 		Status:      m.Status,
-		StartDate:   bson.Now()}
+		StartDate:   time.Now()}
 }
