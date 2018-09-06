@@ -6,7 +6,7 @@ import (
 
 // Member struct is defined for holding the member data
 type Member struct {
-	ID          string    `json:"id"`
+	ID          string    `json:"_id" bson:"_id,omitempty"`
 	Name        string    `json:"name"`
 	Surname     string    `json:"surname"`
 	Email       string    `json:"email"`

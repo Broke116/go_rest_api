@@ -41,6 +41,7 @@ type memberController struct {
 func MemberControllerConstructor(ms *service.MemberService, r *mux.Router) *mux.Router {
 	memberController := memberController{ms}
 
+	r.HandleFunc("/memberStatus", memberController.GetStatus).Methods("GET")
 	r.HandleFunc("/members", memberController.GetMembers).Methods("GET")
 	r.HandleFunc("/insertMember", memberController.InsertMember).Methods("POST")
 	r.HandleFunc("/updateMember/{id}", memberController.UpdateMember).Methods("PUT")
