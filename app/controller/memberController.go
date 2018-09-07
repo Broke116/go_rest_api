@@ -70,35 +70,22 @@ func (m *memberController) GetMembers(w http.ResponseWriter, r *http.Request) {
 
 // GetMember method is used to return a specific member
 func (m *memberController) GetMember(w http.ResponseWriter, r *http.Request) {
-	//id := mux.Vars(r)["id"]
+	id := mux.Vars(r)["id"]
 	utils.Log(r.Method, r.URL)
 
-	result = nil
+	member, err := m.memberService.GetMemberByID(id)
+	if err != nil {
+		model.CheckError(w, "Error when getting the member", http.StatusNotFound) // 404 status code
+	}
 
-	/*for _, member := range members {
-		if member.ID == string(id) {
-			result = member
-		}
-	}*/
-
-	m.SendJSON(w, r, result, http.StatusOK)
+	m.SendJSON(w, r, member, http.StatusOK)
 }
 
 // InsertMember endpoint is used to insert new members to the db
 func (m *memberController) InsertMember(w http.ResponseWriter, r *http.Request) {
 	utils.Log(r.Method, r.URL)
-	//b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 
-	//utils.Error(w, err, 500)
-
-	/*var member model.Member
-	err = json.Unmarshal(b, &member)
-	member.ID = strconv.Itoa(len(members) + 1)
-
-	utils.Error(w, err, 500)
-
-	members = append(members, member)*/
 	resultMessage = "success"
 
 	var member model.Member
