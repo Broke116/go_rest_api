@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"angular-go-web-app/go/models"
 	"encoding/json"
 	"fmt"
 	"go_rest_api/app/model"
@@ -64,7 +63,7 @@ func (m *memberController) GetMembers(w http.ResponseWriter, r *http.Request) {
 	members, err := m.memberService.GetMembers()
 
 	if err != nil {
-		models.CheckError(w, "Error when getting the members", http.StatusNotFound) // 404 status code
+		model.CheckError(w, "Error when getting the members", http.StatusNotFound) // 404 status code
 	}
 	m.SendJSON(w, r, members, http.StatusOK)
 }
@@ -105,14 +104,14 @@ func (m *memberController) InsertMember(w http.ResponseWriter, r *http.Request) 
 	var member model.Member
 	if err := json.NewDecoder(r.Body).Decode(&member); err != nil { // decode body
 		fmt.Println(err)
-		models.CheckError(w, err.Error(), http.StatusInternalServerError) // 500 status code
+		model.CheckError(w, err.Error(), http.StatusInternalServerError) // 500 status code
 	}
 
 	member.StartDate = time.Now()
 
 	if err := m.memberService.InsertMember(&member); err != nil {
 		fmt.Println(err)
-		models.CheckError(w, err.Error(), http.StatusInternalServerError) // 500 status code
+		model.CheckError(w, err.Error(), http.StatusInternalServerError) // 500 status code
 	}
 
 	m.SendJSON(w, r, resultMessage, http.StatusOK)
