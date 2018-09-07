@@ -38,7 +38,8 @@ pipeline {
         stage('Run') {
             agent any
             steps {
-                sh 'docker-compose up -d'
+                //sh 'docker-compose up -d'
+                sh 'docker stack deploy -c docker-compose.yml go_api'
             }
         }
         stage('Test & Clean-up') {
