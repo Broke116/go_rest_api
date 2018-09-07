@@ -1,11 +1,10 @@
 package main
 
 import (
-	"go_rest_api/app/controller"
+	"go_rest_api/app/config/db/mongo"
+	"go_rest_api/app/server"
+	"go_rest_api/app/service"
 	"log"
-	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
 const (
@@ -13,7 +12,19 @@ const (
 )
 
 func main() {
-	mc := &controller.MemberController{}
+	ms, err := mongo.NewSession("mongodb://db:27017") // do not hard code the server address
+
+	if err != nil {
+		log.Fatalln("unable to connect to mongodb")
+	}
+
+	defer ms.Close()
+
+	memberService := service.MemberServiceConstructor(ms.Copy(), "airline", "members")
+	s := server.NewServer(memberService)
+	s.Start()
+
+	/*mc := &controller.MemberController{}
 
 	r := mux.NewRouter()
 	s := r.PathPrefix("/api/v1/").Subrouter()
@@ -26,5 +37,5 @@ func main() {
 	s.HandleFunc("/deleteMember/{id}", mc.DeleteMember).Methods("DELETE")
 
 	http.Handle("/", r)
-	log.Fatal(http.ListenAndServe(address, nil))
+	log.Fatal(http.ListenAndServe(address, nil))*/
 }

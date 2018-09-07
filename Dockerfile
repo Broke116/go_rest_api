@@ -1,5 +1,6 @@
 # build stage
 FROM golang:1.10 AS builder
+LABEL maintainer = "ekiny018@gmail.com"
 ADD https://github.com/golang/dep/releases/download/v0.4.1/dep-linux-amd64 /usr/bin/dep
 RUN chmod +x /usr/bin/dep
 RUN mkdir -p /go/src/go_rest_api

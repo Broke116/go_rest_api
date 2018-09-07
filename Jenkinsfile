@@ -12,33 +12,50 @@ pipeline {
         stage('Pre process') {
             agent any
             steps {
-                sh 'docker stop $(docker ps -a -q --filter ancestor=rest_api)'
-                echo "Container is stopped"
+                script {
+                    if ("(docker ps -q -f name=go_api)") {
+                        sh 'docker stop $(docker ps -a -q --filter ancestor=go_api)'
+                        echo "Running container is stopped"
+                        sh 'docker stop $(docker ps -a -q --filter ancestor=mongo:latest)'
+                        echo "Running database container is stopped."
+                    } else {
+                        echo "Do not have a running container right now."
+                    }
+                }                
                 sh 'docker container prune'
-                echo "Stopped containers are pruned"
-                sh 'docker rmi -f $(docker images --format "{{.Repository}}:{{.Tag}}" | grep "rest_api")'
-                echo "Image is removed"
+                echo "Stopped/unused containers are pruned"
+                //sh 'docker rmi -f $(docker images --format "{{.Repository}}:{{.Tag}}" | grep "go_api")'
+                //echo "Existing image is removed"
             }
         }
         stage('Build') {
             agent any
             steps {
-                git "https://github.com/Broke116/go_rest_api.git"
-                sh 'docker build -t rest_api .'
+                git url: "https://github.com/Broke116/go_rest_api.git", branch: "api_compose"
+                sh 'docker-compose build'
             }
         }
-        stage('Docker Run'){
+        stage('Run') {
             agent any
             steps {
-                sh 'docker run -d --rm -p 4000:3030 -t rest_api'
-                echo "Application started on port: 4000"
+                sh 'docker-compose up -d'
             }
         }
-        stage('Clean up') {
-            agent any
-            steps {
-                sh 'docker rmi -f $(docker images -f "dangling=true" -q)'
-                echo "Dangling images removed"
+        stage('Test & Clean-up') {
+            parallel {
+                stage('Test'){
+                    agent any
+                    steps {
+                        sh 'docker ps -q -f name=go_api'
+                    }
+                }
+                stage('Clean up') {
+                    agent any
+                    steps {
+                        sh 'docker rmi -f $(docker images -f "dangling=true" -q)'
+                        echo "Dangling images removed"
+                    }
+                }
             }
         }
     }
