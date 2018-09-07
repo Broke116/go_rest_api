@@ -13,26 +13,13 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"gopkg.in/mgo.v2/bson"
 )
 
 var result interface{}
 var resultMessage string
 var httpStatusCode int
 
-/*var members = []model.Member{
-	model.Member{ID: "1", Name: "Ekin", Surname: "Yucel", Email: "sad@asd.com", Nationality: "TUR", Age: 23, Gender: "M", Status: "AC", StartDate: time.Now()},
-	model.Member{ID: "2", Name: "Susan", Surname: "Doe", Email: "sad@asd.com", Nationality: "TUR", Age: 24, Gender: "F", Status: "AC", StartDate: time.Now()},
-	model.Member{ID: "3", Name: "Alberto", Surname: "Yucel", Email: "sad@asd.com", Nationality: "BRA", Age: 30, Gender: "M", Status: "AC", StartDate: time.Now()},
-	model.Member{ID: "4", Name: "Jane", Surname: "Doe", Email: "sad@asd.com", Nationality: "TUR", Age: 26, Gender: "F", Status: "AC", StartDate: time.Now()},
-	model.Member{ID: "5", Name: "John", Surname: "Doe", Email: "sad@asd.com", Nationality: "ENG", Age: 28, Gender: "M", Status: "AC", StartDate: time.Now()},
-	model.Member{ID: "6", Name: "Test", Surname: "Test", Email: "sad@asd.com", Nationality: "JPN", Age: 23, Gender: "F", Status: "AC", StartDate: time.Now()},
-	model.Member{ID: "7", Name: "Mirel", Surname: "Souza", Email: "sad@asd.com", Nationality: "TUR", Age: 25, Gender: "F", Status: "AC", StartDate: time.Now()},
-	model.Member{ID: "8", Name: "Donald", Surname: "Duck", Email: "sad@asd.com", Nationality: "ITA", Age: 50, Gender: "F", Status: "AC", StartDate: time.Now()},
-	model.Member{ID: "9", Name: "Tekin", Surname: "Acar", Email: "sad@asd.com", Nationality: "TUR", Age: 18, Gender: "M", Status: "AC", StartDate: time.Now()},
-	model.Member{ID: "10", Name: "Roberto", Surname: "Soldado", Email: "sad@asd.com", Nationality: "SPA", Age: 24, Gender: "F", Status: "AC", StartDate: time.Now()},
-}*/
-
-// MemberController is a definition for member controller
 type memberController struct {
 	memberService *service.MemberService
 }
@@ -106,6 +93,7 @@ func (m *memberController) InsertMember(w http.ResponseWriter, r *http.Request) 
 
 // UpdateMember method is used to update a specific member
 func (m *memberController) UpdateMember(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["id"]
 	utils.Log(r.Method, r.URL)
 
 	b, err := ioutil.ReadAll(r.Body)
@@ -113,29 +101,24 @@ func (m *memberController) UpdateMember(w http.ResponseWriter, r *http.Request) 
 
 	utils.Error(w, err, 500)
 
+	// check if the id is valid
+	if !bson.IsObjectIdHex(id) {
+		model.CheckError(w, "Invalid ObjectId", http.StatusNotFound) // 404 status code
+	}
+
 	var member model.Member
 	err = json.Unmarshal(b, &member)
 
+	fmt.Println("member ", member)
+
 	utils.Error(w, err, 500)
 
-	/*for i, m := range members {
-		if m.ID == member.ID {
-			members[i].Name = member.Name
-			members[i].Surname = member.Surname
-			members[i].Gender = member.Gender
-			members[i].Age = member.Age
-			members[i].Nationality = member.Nationality
-			resultMessage = "success"
-			httpStatusCode = 200
-			break
-		} else {
-			resultMessage = "not success"
-			httpStatusCode = 404
-		}
-	}*/
+	if err := m.memberService.UpdateMember(&member, id); err != nil {
+		model.CheckError(w, err.Error(), http.StatusNotFound) // 500 status code
+	}
 
-	resultMessage = "not success"
-	httpStatusCode = 404
+	resultMessage = "success"
+	httpStatusCode = 200
 
 	m.SendJSON(w, r, resultMessage, httpStatusCode)
 }
@@ -144,22 +127,17 @@ func (m *memberController) UpdateMember(w http.ResponseWriter, r *http.Request) 
 func (m *memberController) DeleteMember(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
 	utils.Log(r.Method, r.URL)
-	fmt.Println("id ", id)
 
-	/*for i, m := range members {
-		if m.ID == string(id) {
-			members = append(members[:i], members[i+1:]...)
-			resultMessage = "success"
-			httpStatusCode = 200
-			break
-		} else {
-			resultMessage = "member not found"
-			httpStatusCode = 404
-		}
-	}*/
+	if !bson.IsObjectIdHex(id) {
+		model.CheckError(w, "Invalid ObjectId", http.StatusNotFound) // 404 status code
+	}
 
-	resultMessage = "member not found"
-	httpStatusCode = 404
+	if err := m.memberService.DeleteMember(id); err != nil {
+		model.CheckError(w, err.Error(), http.StatusNotFound) // 500 status code
+	}
+
+	resultMessage = "success"
+	httpStatusCode = 200
 
 	m.SendJSON(w, r, resultMessage, httpStatusCode)
 }

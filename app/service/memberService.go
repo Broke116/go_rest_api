@@ -37,7 +37,7 @@ func (ms *MemberService) GetMembers() (*model.Members, error) {
 // GetMemberByID is a method of MemberService
 func (ms *MemberService) GetMemberByID(id string) (*model.Member, error) {
 	member := dao.MemberModel{}
-	err := ms.collection.FindId(id).One(&member)
+	err := ms.collection.FindId(bson.ObjectIdHex(id)).One(&member)
 	return member.ToMember(), err
 }
 

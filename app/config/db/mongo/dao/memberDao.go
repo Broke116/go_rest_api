@@ -5,19 +5,20 @@ import (
 	"time"
 
 	mgo "gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // MemberModel is the database representation of User object
 type MemberModel struct {
-	ID          string    `bson:"_id,omitempty"`
-	Name        string    `bson:"name"`
-	Surname     string    `bson:"surname"`
-	Email       string    `bson:"email"`
-	Nationality string    `bson:"nationality"`
-	Age         int       `bson:"age"`
-	Gender      string    `bson:"gender"`
-	Status      string    `bson:"status"`
-	StartDate   time.Time `bson:"start_date"`
+	ID          bson.ObjectId `bson:"_id,omitempty"`
+	Name        string        `bson:"name"`
+	Surname     string        `bson:"surname"`
+	Email       string        `bson:"email"`
+	Nationality string        `bson:"nationality"`
+	Age         int           `bson:"age"`
+	Gender      string        `bson:"gender"`
+	Status      string        `bson:"status"`
+	StartDate   time.Time     `bson:"start_date"`
 }
 
 // MemberModels is an array of MemberModel
