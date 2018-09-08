@@ -31,7 +31,7 @@ pipeline {
         stage('Build') {
             agent any
             steps {
-                git url: "https://github.com/Broke116/go_rest_api.git", branch: "api_compose"
+                git url: "https://github.com/Broke116/go_rest_api.git", branch: "master"
                 sh 'docker-compose build'
             }
         }
