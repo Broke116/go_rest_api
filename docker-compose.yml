@@ -2,7 +2,6 @@ version: '3'
 services:
   api:
     image: go_api
-    container_name: go_api
     ports:
       - "4000:3030"
     depends_on:
@@ -21,4 +20,4 @@ volumes:
   mongodata:
 networks:
   backend:
-    driver: bridge
+    driver: overlay
