@@ -1,20 +1,16 @@
 version: '3'
 services:
   api:
-    build: "./"
     image: go_api
     container_name: go_api
     ports:
       - "4000:3030"
     depends_on:
       - db
-    links:
-      - db
     networks:
       - backend
   db:
     image: mongo:latest
-    container_name: db
     ports:
       - "27017:27017"
     volumes:
