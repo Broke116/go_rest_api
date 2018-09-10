@@ -7,7 +7,7 @@ services:
     depends_on:
       - db
     networks:
-      - backend
+      - backend_stack
   db:
     image: mongo:latest
     ports:
@@ -15,9 +15,9 @@ services:
     volumes:
       - "mongodata:/data/db"
     networks:
-      - backend
+      - backend_stack
 volumes:
   mongodata:
 networks:
-  backend:
+  backend_stack:
     driver: overlay
