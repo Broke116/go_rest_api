@@ -4,6 +4,15 @@ Whenever a new commit is pushed to this repository, jenkins on the server is aut
 
 Some sort of a learning repository
 
+# How to build
+```
+$ docker build -t go_rest .
+$ docker run -p 9090:3030 -t go_rest
+```
+
+# Automatic deployment
+Settings can be found inside the Jenkinsfile
+
 # Stack
 
 - Go 1.10
