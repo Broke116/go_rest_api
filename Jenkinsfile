@@ -16,8 +16,8 @@ pipeline {
                     if ("(docker ps -q -f name=go_api)") {
                         sh 'docker stop $(docker ps -a -q --filter ancestor=go_api)'
                         echo "Running container is stopped"
-                        sh 'docker stop $(docker ps -a -q --filter ancestor=mongo:latest)'
-                        echo "Running database container is stopped."
+                        //sh 'docker stop $(docker ps -a -q --filter ancestor=mongo:latest)'
+                        //echo "Running database container is stopped."
                     } else {
                         echo "Do not have a running container right now."
                     }
@@ -31,14 +31,15 @@ pipeline {
         stage('Build') {
             agent any
             steps {
-                git url: "https://github.com/Broke116/go_rest_api.git", branch: "master"
-                sh 'docker-compose build'
+                git url: "https://github.com/Broke116/go_rest_api.git", branch: "api_compose"
+                sh 'docker build -t go_api .'
             }
         }
         stage('Run') {
             agent any
             steps {
-                sh 'docker-compose up -d'
+                //sh 'docker-compose up -d'
+                sh 'docker stack deploy -c docker-compose.yml go_api'
             }
         }
         stage('Test & Clean-up') {

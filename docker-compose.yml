@@ -1,28 +1,23 @@
 version: '3'
 services:
   api:
-    build: "./"
     image: go_api
-    container_name: go_api
     ports:
       - "4000:3030"
     depends_on:
       - db
-    links:
-      - db
     networks:
-      - backend
+      - backend_stack
   db:
     image: mongo:latest
-    container_name: db
     ports:
       - "27017:27017"
     volumes:
       - "mongodata:/data/db"
     networks:
-      - backend
+      - backend_stack
 volumes:
   mongodata:
 networks:
-  backend:
-    driver: bridge
+  backend_stack:
+    driver: overlay
